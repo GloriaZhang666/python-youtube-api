@@ -11,6 +11,9 @@ from urllib.parse import urlparse, urlencode, parse_qs
 from youtube.videos_channelid import channelVideo
 from youtube.search_keyword import searchVideo
 from youtube.video_comments import VideoComment
+from __future__ import unicode_literals
+import youtube_dl
+from config import SAVE_PATH
 
 def main():
     os.makedirs("output", exist_ok=True)
@@ -57,8 +60,19 @@ def main():
         parser.add_argument("--listurl", help="Required URL for which comments to return", required=True)
         parser.add_argument("--key", help="Required API key", required=True)
         args = parser.parse_args()
-        list_id = str(args.listurl)
-        for 
+        
+        listurl = str(args.listurl)
+        download = False 
+        ydl_opts = {
+            'outtmpl': SAVE_PATH+"videosInList.csv",     // output filename
+            'writesubtitles': True,
+            'format': 'mp4',
+            'writethumbnail': True
+        }
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ie_result = ydl.extract_info(url, download)
+            
+        for item in ie_result:
             video_id = urlparse(str(args.videourl))
             q = parse_qs(video_id.query)
             vid = q["v"][0]
