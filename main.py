@@ -51,6 +51,21 @@ def main():
         vc = VideoComment(args.max, vid, args.key)
         vc.get_video_comments()
 
+     elif str(sys.argv[1]) == "--cl":
+        parser.add_argument("--cl", help="get video urls from playlist and calls comment function by keyword function", action='store_true')
+        parser.add_argument("--max", help="number of comments to return", default=10)
+        parser.add_argument("--listurl", help="Required URL for which comments to return", required=True)
+        parser.add_argument("--key", help="Required API key", required=True)
+        args = parser.parse_args()
+        list_id = str(args.listurl)
+        for 
+            video_id = urlparse(str(args.videourl))
+            q = parse_qs(video_id.query)
+            vid = q["v"][0]
+
+            vc = VideoComment(args.max, vid, args.key)
+            vc.get_video_comments()
+
     else:
         print("Invalid Arguments\nAdd --s for searching video by keyword after the filename\nAdd --sc to list vidoes based on channel id")
 
